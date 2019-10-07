@@ -1,5 +1,6 @@
 """
-
+	NQueens Challenge Accepted
+	@author: Andres Hernandez
 """
 
 class Position:
