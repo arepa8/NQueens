@@ -1,0 +1,18 @@
+version: "3"
+services:
+  db:
+    image: "postgres"
+    container_name: "postgres"
+    hostname: postgres
+    environment:
+        - POSTGRES_USER=user
+        - POSTGRES_PASSWORD=pass
+        - POSTGRES_DB=solutions 
+    ports:
+      - "54320:5432"
+
+  nqueens:
+    restart: always
+    build: .    
+    depends_on:
+      - db

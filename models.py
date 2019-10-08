@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-DATABASE_URI = 'postgres+psycopg2://root:eleden@localhost:5432/solutions'
+DATABASE_URI = 'postgres+psycopg2://user:pass@db:5432/solutions'
 
 Base = declarative_base()
 engine = create_engine(DATABASE_URI, echo=True)
