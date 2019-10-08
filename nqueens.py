@@ -3,6 +3,8 @@
 	@author: Andres Hernandez
 """
 
+from models import Solution, create_session, create_db
+
 class Position:
 	def __init__(self, column, sons=list()):
 		self.column = column
@@ -67,10 +69,39 @@ class NQueens:
 					place.sons = self.get_sons(place,taken_places)
 					self.set_in_place(place.sons,taken_places+[place])
 
+
 	def pretty_print(self,solution):
-		solution = [position.column for position in solution]
-		print("Solution: {}".format(solution))
+		result = list()
+		i = 0
+		for position in solution:
+			tupple = (i,position.column)
+			result.append(tupple)
+			i+=1
+		print("Solution: {}".format(result))
+		self.save(result)
+
+
+	def save(self, solution):
+		session = create_session()
+		new = Solution(nqueen=self.size,solution=str(solution))
+		session.add(new)
+		try:
+			session.commit()
+		except Exception as e:
+			print("Commiting the solution: {}".format(e))
+			session.rollback()
+		session.close()
 
 
 if __name__ == '__main__':
-	NQueens(8)
+	create_db()
+	print("----   NQueen Solver   -----")
+	while True:
+		print("If you want to play, insert a positive number")
+		print("If you want to quit, insert '0'.")
+		n = input("Insert a number: ")
+		if int(n)<=0:
+			print("Bye.")
+			break
+		else:
+			NQueens(int(n))
